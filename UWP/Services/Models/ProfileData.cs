@@ -5,22 +5,22 @@ namespace WeiPo.Services.Models
     public class ProfileData
     {
         [JsonProperty("avatar_guide", NullValueHandling = NullValueHandling.Ignore)]
-        public object[] AvatarGuide { get; set; }
+        public object[]? AvatarGuide { get; set; }
 
         [JsonProperty("userInfo", NullValueHandling = NullValueHandling.Ignore)]
-        public UserInfo UserInfo { get; set; }
+        public UserInfo?  UserInfo { get; set; }
 
         [JsonProperty("fans_scheme", NullValueHandling = NullValueHandling.Ignore)]
-        public string FansScheme { get; set; }
+        public string?  FansScheme { get; set; }
 
         [JsonProperty("follow_scheme", NullValueHandling = NullValueHandling.Ignore)]
-        public string FollowScheme { get; set; }
+        public string?  FollowScheme { get; set; }
 
         [JsonProperty("tabsInfo", NullValueHandling = NullValueHandling.Ignore)]
-        public TabsInfo TabsInfo { get; set; }
+        public TabsInfo?  TabsInfo { get; set; }
 
         [JsonProperty("scheme", NullValueHandling = NullValueHandling.Ignore)]
-        public string Scheme { get; set; }
+        public string?  Scheme { get; set; }
 
         [JsonProperty("showAppTips", NullValueHandling = NullValueHandling.Ignore)]
         public long? ShowAppTips { get; set; }

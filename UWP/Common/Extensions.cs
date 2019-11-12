@@ -44,7 +44,7 @@ namespace WeiPo.Common
         }
 
         public static async Task<StorageFile> SaveCacheFile(this IRandomAccessStreamReference reference,
-            string name = null)
+            string? name = null)
         {
             
             var file = await ApplicationData.Current.LocalCacheFolder.CreateFileAsync(name ?? $"{new Random().Next()}.png", CreationCollisionOption.GenerateUniqueName);

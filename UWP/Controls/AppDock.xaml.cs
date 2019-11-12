@@ -74,7 +74,7 @@ namespace WeiPo.Controls
 
         public DockViewModel ViewModel => DockViewModel.Instance;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public bool OnBackPress()
         {
@@ -130,7 +130,7 @@ namespace WeiPo.Controls
             Singleton<BroadcastCenter>.Instance.Send(this, "message_center_visible", true);
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -138,7 +138,10 @@ namespace WeiPo.Controls
         private void RemoveImageClicked(object sender, RoutedEventArgs e)
         {
             var file = (sender as FrameworkElement)?.DataContext as StorageFile;
-            ViewModel.PostWeiboViewModel.Files.Remove(file);
+            if (file != null)
+            {
+                ViewModel.PostWeiboViewModel.Files.Remove(file);                
+            }
         }
 
         private void TeachGridLoaded(object sender, RoutedEventArgs e)
@@ -220,6 +223,8 @@ namespace WeiPo.Controls
                 var files = (await dataPackageView.GetStorageItemsAsync())
                     .Where(item => item is StorageFile file && file.ContentType.Contains("image"))
                     .Select(it => it as StorageFile)
+                    .Where(it => it != null)
+                    .Select(it => it!)
                     .ToArray();
                 ViewModel.PostWeiboViewModel.AddImage(files);
             }
@@ -236,7 +241,10 @@ namespace WeiPo.Controls
             {
                 ViewModel.PostWeiboViewModel.Commit();
             }
-            (sender as TextBox).AcceptsReturn = !_isCtrlDown;
+            if (sender is TextBox textBox)
+            {
+                textBox.AcceptsReturn = !_isCtrlDown;                
+            }
         }
 
         private void TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
@@ -245,7 +253,10 @@ namespace WeiPo.Controls
             if (e.Key == Windows.System.VirtualKey.Control)
             {
                 _isCtrlDown = false;
-                (sender as TextBox).AcceptsReturn = !_isCtrlDown;
+                if (sender is TextBox textBox)
+                {
+                    textBox.AcceptsReturn = !_isCtrlDown;
+                }
             }
         }
 
@@ -257,6 +268,10 @@ namespace WeiPo.Controls
         private void EmojiGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var item = e.ClickedItem as EmojiModel;
+            if (item == null || item.Value == null)
+            {
+                return;
+            }
             var index = DockInput.SelectionStart;
             ViewModel.PostWeiboViewModel.Content = DockInput.Text.Insert(index, item.Value);
             DockInput.SelectionStart = index + item.Value.Length;

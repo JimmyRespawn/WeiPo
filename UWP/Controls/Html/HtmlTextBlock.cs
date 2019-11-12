@@ -49,8 +49,8 @@ namespace WeiPo.Controls.Html
             nameof(IsTextSelectionEnabled), typeof(bool), typeof(HtmlTextBlock), new PropertyMetadata(default));
 
         private readonly List<Hyperlink> _listeningHyperlinks = new List<Hyperlink>();
-        private RichTextBlock _richTextContent;
-        private Border _rootElement;
+        private RichTextBlock? _richTextContent;
+        private Border? _rootElement;
 
         public HtmlTextBlock()
         {
@@ -75,7 +75,7 @@ namespace WeiPo.Controls.Html
             set => SetValue(TextProperty, value);
         }
 
-        public event EventHandler<LinkClickedEventArgs> LinkClicked;
+        public event EventHandler<LinkClickedEventArgs>? LinkClicked;
 
         protected override void OnApplyTemplate()
         {
@@ -93,14 +93,14 @@ namespace WeiPo.Controls.Html
 
         private void HyperLinkOnClick(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            LinkClicked?.Invoke(this, new LinkClickedEventArgs(sender.GetValue(HyperlinkUrlProperty) as string));
+            LinkClicked?.Invoke(this, new LinkClickedEventArgs(sender.GetValue(HyperlinkUrlProperty) as string ?? string.Empty));
         }
 
         private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.Property == TextProperty)
             {
-                (d as HtmlTextBlock).RenderHtml();
+                (d as HtmlTextBlock)?.RenderHtml();
             } 
         }
 
@@ -182,7 +182,7 @@ namespace WeiPo.Controls.Html
 
         private void RenderIconImg(HtmlNode node, IHtmlRenderContext context)
         {
-            if (node.HasAttributes && node.Attributes.Any(it => it.Name == "alt"))
+            if (node.HasAttributes && node.Attributes.Any(it => it.Name == "alt") && _richTextContent != null)
             {
                 var name = node.GetAttributeValue("alt", "").TrimStart('[').TrimEnd(']');
                 var link = node.GetAttributeValue("src", "");
@@ -203,7 +203,7 @@ namespace WeiPo.Controls.Html
 
         private void RenderImg(HtmlNode node, IHtmlRenderContext context)
         {
-            if (node.HasAttributes && node.Attributes.Any(it => it.Name == "alt"))
+            if (node.HasAttributes && node.Attributes.Any(it => it.Name == "alt") && _richTextContent != null)
             {
                 var name = node.GetAttributeValue("alt", "").TrimStart('[').TrimEnd(']');
                 var link = node.GetAttributeValue("src", "");

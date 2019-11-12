@@ -16,7 +16,7 @@ namespace WeiPo.Activities
     /// </summary>
     public sealed partial class TimelineActivity
     {
-        private ScrollViewer _scrollViewer;
+        private ScrollViewer? _scrollViewer;
 
         public TimelineActivity()
         {
@@ -67,9 +67,9 @@ namespace WeiPo.Activities
 
         private void ScrollViewerOnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            if (!e.IsIntermediate)
+            if (!e.IsIntermediate && sender is ScrollViewer scrollViewer)
             {
-                Singleton<BroadcastCenter>.Instance.Send(this, "dock_expand", _scrollViewer.VerticalOffset < 5d);
+                Singleton<BroadcastCenter>.Instance.Send(this, "dock_expand", scrollViewer.VerticalOffset < 5d);
             }
         }
     }

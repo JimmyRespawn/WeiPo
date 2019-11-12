@@ -20,7 +20,7 @@ namespace WeiPo.Services.Models
                 JsonToken.Null => null,
                 JsonToken.Boolean => null,
                 _ => serializer.Deserialize<List<CommentModel>>(reader)
-            };
+            } ?? new List<CommentModel>();
         }
 
         public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)

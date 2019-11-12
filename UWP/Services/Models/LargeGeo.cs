@@ -6,13 +6,13 @@ namespace WeiPo.Services.Models
     {
         [JsonProperty("width", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(ParseStringConverter))]
-        public long Width { get; set; }
+        public long?  Width { get; set; }
 
         [JsonProperty("height", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(ParseStringConverter))]
-        public long Height { get; set; }
+        public long?  Height { get; set; }
 
         [JsonProperty("croped", NullValueHandling = NullValueHandling.Ignore)]
-        public bool Croped { get; set; }
+        public bool?  Croped { get; set; }
     }
 }

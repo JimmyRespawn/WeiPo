@@ -14,14 +14,14 @@ namespace WeiPo.Activities.User.Tab
             nameof(TabData), typeof(Services.Models.Tab), typeof(AbsTab),
             new PropertyMetadata(default, PropertyChangedCallback));
 
-        private AbsTabViewModel _viewModel;
+        private AbsTabViewModel? _viewModel;
 
         public AbsTab()
         {
             Loaded += OnLoaded;
         }
 
-        public AbsTabViewModel ViewModel
+        public AbsTabViewModel? ViewModel
         {
             get => _viewModel;
             private set
@@ -37,11 +37,11 @@ namespace WeiPo.Activities.User.Tab
             set => SetValue(TabDataProperty, value);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected abstract AbsTabViewModel CreateViewModel(ProfileData viewModelProfile, Services.Models.Tab tabData);
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -50,7 +50,7 @@ namespace WeiPo.Activities.User.Tab
         {
             Loaded -= OnLoaded;
             var user = this.FindAscendant<UserActivity>();
-            if (user != null)
+            if (user?.ViewModel?.Profile != null)
             {
                 ViewModel = CreateViewModel(user.ViewModel.Profile, TabData);
             }
@@ -64,7 +64,7 @@ namespace WeiPo.Activities.User.Tab
         {
             if (e.Property == TabDataProperty)
             {
-                (d as AbsTab).OnTabDataChanged();
+                (d as AbsTab)?.OnTabDataChanged();
             }
         }
     }

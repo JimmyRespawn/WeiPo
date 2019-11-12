@@ -29,7 +29,7 @@ namespace WeiPo.Controls
 
         private static void OnPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as FollowStateButton).UpdateState();
+            (d as FollowStateButton)?.UpdateState();
         }
 
         private void UpdateState()

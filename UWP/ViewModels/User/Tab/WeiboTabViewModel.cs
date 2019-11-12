@@ -16,18 +16,18 @@ namespace WeiPo.ViewModels.User.Tab
 {
     public class InterestPeopleViewModel
     {
-        public InterestPeopleViewModel(List<InterestPeopleModel> items, InterestPropleDescModel descModel)
+        public InterestPeopleViewModel(List<InterestPeopleModel> items, InterestPropleDescModel? descModel)
         {
             Items = items;
             DescModel = descModel;
         }
 
-        public InterestPropleDescModel DescModel { get; }
+        public InterestPropleDescModel? DescModel { get; }
         public List<InterestPeopleModel> Items { get; }
 
         public void OnItemClicked(object sender, TappedRoutedEventArgs args)
         {
-            if (args.OriginalSource is FrameworkElement element && element.DataContext is InterestPeopleModel model)
+            if (args.OriginalSource is FrameworkElement element && element.DataContext is InterestPeopleModel model && model.User?.Id != null)
             {
                 Singleton<BroadcastCenter>.Instance.Send(this, "user_clicked", model.User.Id);
             }
@@ -63,6 +63,10 @@ namespace WeiPo.ViewModels.User.Tab
             try
             {
                 var result = await Singleton<Api>.Instance.ProfileTab(_userId, _containerId, _sinceId);
+                if (result == null)
+                {
+                    return new List<object>();
+                }
                 _sinceId = result["cardlistInfo"].Value<long>("since_id");
                 //_sinceId = result.Data.SelectToken("cardlistInfo.since_id").Value<long>();
                 return result["cards"]
@@ -87,7 +91,8 @@ namespace WeiPo.ViewModels.User.Tab
 
                         return null;
                     })
-                    .Where(it => it != null);
+                    .Where(it => it != null)
+                    .Select(it => it!);
             }
             catch (WeiboException e)// Empty here
             {
@@ -100,11 +105,14 @@ namespace WeiPo.ViewModels.User.Tab
     {
         public WeiboTabViewModel(ProfileData profile, Services.Models.Tab tabData) : base(profile, tabData)
         {
-            DataSource =
-                new LoadingCollection<WeiboTabDataSource, object>(
-                    new WeiboTabDataSource(profile.UserInfo.Id, tabData.Containerid));
+            if (profile.UserInfo?.Id != null && tabData.Containerid != null)
+            {
+                DataSource =
+                    new LoadingCollection<WeiboTabDataSource, object>(
+                        new WeiboTabDataSource(profile.UserInfo.Id.Value, tabData.Containerid));
+            }
         }
 
-        public LoadingCollection<WeiboTabDataSource, object> DataSource { get; }
+        public LoadingCollection<WeiboTabDataSource, object>? DataSource { get; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface ICanReply
     {
-        string Id { get; }
-        string Mid { get; }
+        string? Id { get; }
+        string? Mid { get; }
     }
 }

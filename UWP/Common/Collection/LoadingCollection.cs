@@ -13,13 +13,13 @@ namespace WeiPo.Common.Collection
     public class LoadingCollection<TSource, IType> : IncrementalLoadingCollection<TSource, IType>, ISupportRefresh
         where TSource : IIncrementalSource<IType>
     {
-        public LoadingCollection(int itemsPerPage = 20, Action onStartLoading = null, Action onEndLoading = null,
-            Action<Exception> onError = null) : base(itemsPerPage, onStartLoading, onEndLoading, onError)
+        public LoadingCollection(int itemsPerPage = 20, Action? onStartLoading = null, Action? onEndLoading = null,
+            Action<Exception>? onError = null) : base(itemsPerPage, onStartLoading, onEndLoading, onError)
         {
         }
 
-        public LoadingCollection(TSource source, int itemsPerPage = 20, Action onStartLoading = null,
-            Action onEndLoading = null, Action<Exception> onError = null) : base(source, itemsPerPage, onStartLoading,
+        public LoadingCollection(TSource source, int itemsPerPage = 20, Action? onStartLoading = null,
+            Action? onEndLoading = null, Action<Exception>? onError = null) : base(source, itemsPerPage, onStartLoading,
             onEndLoading, onError)
         {
         }

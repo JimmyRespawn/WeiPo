@@ -26,10 +26,10 @@ namespace WeiPo.Controls
         public static readonly DependencyProperty LayoutProperty = DependencyProperty.Register(
             nameof(Layout), typeof(Layout), typeof(ListViewEx), new PropertyMetadata(default(Layout)));
 
-        private bool _isLoading;
-        private RefreshContainer _refresher;
+        private bool _isLoading = false;
+        private RefreshContainer? _refresher;
 
-        private ScrollViewer _scrollViewer;
+        private ScrollViewer? _scrollViewer;
 
         public ListViewEx()
         {
@@ -70,7 +70,7 @@ namespace WeiPo.Controls
             }
 
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                _refresher.RequestRefresh());
+                _refresher?.RequestRefresh());
         }
 
         private void OnItemsSourceChanged()
@@ -87,7 +87,7 @@ namespace WeiPo.Controls
         {
             if (e.Property == ItemsSourceProperty)
             {
-                (d as ListViewEx).OnItemsSourceChanged();
+                (d as ListViewEx)?.OnItemsSourceChanged();
             }
         }
 
@@ -128,7 +128,7 @@ namespace WeiPo.Controls
 
         private async void TryLoadIfNotFill()
         {
-            if (_isLoading)
+            if (_isLoading || _scrollViewer == null)
             {
                 return;
             }

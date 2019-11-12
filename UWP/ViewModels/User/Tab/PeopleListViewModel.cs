@@ -33,9 +33,8 @@ namespace WeiPo.ViewModels.User.Tab
                     case PeopleList.ListType.Follow:
                     {
                         var result = await Singleton<Api>.Instance.Follow(_uid, pageIndex + 1);
-                        return result["cards"].Select(it => it["user"].ToObject<UserModel>()).ToList();
+                        return result?["cards"].Select(it => it["user"].ToObject<UserModel>()).ToList() ?? new List<UserModel>();
                     }
-                        break;
                     case PeopleList.ListType.Fans:
                     {
                         if (pageIndex == 0)
@@ -44,7 +43,7 @@ namespace WeiPo.ViewModels.User.Tab
                             //var uconfig = await Singleton<Api>.Instance.Config();
                             //long.TryParse(uconfig.Data.Uid, out var ucid);
                             //TODO:Not a good idea
-                            var ucid = DockViewModel.Instance.MyProfile.Result.UserInfo.Id;
+                            var ucid = DockViewModel.Instance.MyProfile?.Result?.UserInfo?.Id;
                             if (ucid == _uid)
                             {
                                 //clear notification
@@ -54,9 +53,8 @@ namespace WeiPo.ViewModels.User.Tab
                         }
 
                         var result = await Singleton<Api>.Instance.Fans(_uid, pageIndex + 1);
-                        return result["cards"].Select(it => it["user"].ToObject<UserModel>()).ToList();
+                        return result?["cards"].Select(it => it["user"].ToObject<UserModel>()).ToList() ?? new List<UserModel>();
                     }
-                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

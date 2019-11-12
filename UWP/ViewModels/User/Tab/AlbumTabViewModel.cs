@@ -28,6 +28,10 @@ namespace WeiPo.ViewModels.User.Tab
             try
             {
                 var result = await Singleton<Api>.Instance.PhotoAll(_uid, _containerId, pageIndex + 1);
+                if (result == null)
+                {
+                    return new List<PicWall>();
+                }
                 return result["cards"].SelectMany(it => it["pics"]).Select(it => it.ToObject<PicWall>());
             }
             catch (WeiboException e)
@@ -41,11 +45,14 @@ namespace WeiPo.ViewModels.User.Tab
     {
         public AlbumTabViewModel(ProfileData profile, Services.Models.Tab tabData) : base(profile, tabData)
         {
-            DataSource =
-                new LoadingCollection<AlbumDataSource, PicWall>(new AlbumDataSource(tabData.Containerid,
-                    profile.UserInfo.Id));
+            if (profile.UserInfo?.Id != null && tabData.Containerid != null)
+            {
+                DataSource =
+                    new LoadingCollection<AlbumDataSource, PicWall>(new AlbumDataSource(tabData.Containerid,
+                        profile.UserInfo.Id.Value));
+            }
         }
 
-        public LoadingCollection<AlbumDataSource, PicWall> DataSource { get; }
+        public LoadingCollection<AlbumDataSource, PicWall>? DataSource { get; }
     }
 }

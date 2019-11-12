@@ -40,9 +40,9 @@ namespace WeiPo.ViewModels
             try
             {
                 var result = await Singleton<Api>.Instance.Hotflow(_id, _mid, _max_id);
-                _max_id = result.MaxId;
-                result.Data.ForEach(it => it.Status = _status);
-                return result.Data;
+                _max_id = result?.MaxId ?? 0;
+                result?.Data?.ForEach(it => it.Status = _status);
+                return result?.Data ?? new List<CommentModel>();
             }
             catch (WeiboException e)
             {
@@ -65,7 +65,7 @@ namespace WeiPo.ViewModels
             try
             {
                 var result = await Singleton<Api>.Instance.RepostTimeline(_id, pageIndex + 1);
-                return result.Data;
+                return result?.Data ?? new List<StatusModel>();
             }
             catch (WeiboException e)
             {
@@ -77,8 +77,8 @@ namespace WeiPo.ViewModels
     public class StatusViewModel : ViewModelBase
     {
 
-        public LoadingCollection<HotflowDataSource, CommentModel> HotflowSource { get; private set; }
-        public LoadingCollection<RepostTimelineDataSource, StatusModel> RepostSource { get; private set; }
+        public LoadingCollection<HotflowDataSource, CommentModel>? HotflowSource { get; private set; }
+        public LoadingCollection<RepostTimelineDataSource, StatusModel>? RepostSource { get; private set; }
 
         public StatusViewModel(StatusModel status)
         {
@@ -86,16 +86,23 @@ namespace WeiPo.ViewModels
             Init();
         }
 
-        public StatusModel Status { get; }
+        public StatusModel? Status { get; }
 
         private async void Init()
         {
+            if (Status == null)
+            {
+                return;
+            }
             long.TryParse(Status.Id, out var id);
             long.TryParse(Status.Mid, out var mid);
-            if (Status.IsLongText)
+            if (Status.IsLongText == true)
             {
                 var result = await Singleton<Api>.Instance.Extend(id);
-                Status.LongText = result.LongTextContent;
+                if (result?.LongTextContent != null)
+                {
+                    Status.LongText = result.LongTextContent;                    
+                }
                 //OnPropertyChanged(nameof(Status));
             }
             

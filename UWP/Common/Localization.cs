@@ -12,9 +12,13 @@ namespace WeiPo.Common
 {
     class i18n : MarkupExtension
     {
-        public string Key { get; set; } 
+        public string? Key { get; set; } 
         protected override object ProvideValue()
         {
+            if (Key == null)
+            {
+                return String.Empty;
+            }
             return Localization.GetString(Key);
         }
     }

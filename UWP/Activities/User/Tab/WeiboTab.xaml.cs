@@ -9,20 +9,20 @@ namespace WeiPo.Activities.User.Tab
 {
     public class WeiboTabDataTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate StatusTemplate { get; set; }
-        public DataTemplate InterestTemplate { get; set; }
+        public DataTemplate? StatusTemplate { get; set; }
+        public DataTemplate? InterestTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item)
         {
             switch (item)
             {
                 case StatusModel status:
-                    return StatusTemplate;
+                    return StatusTemplate ?? new DataTemplate();
                 case InterestPeopleViewModel interest:
-                    return InterestTemplate;
+                    return InterestTemplate ?? new DataTemplate();
+                default:
+                    return new DataTemplate();
             }
-
-            return new DataTemplate();
         }
     }
 

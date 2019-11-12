@@ -22,13 +22,13 @@ namespace WeiPo.Controls
 {
     internal class PageInfoDataTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate DataTemplate { get; set; }
+        public DataTemplate? DataTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             if (item is PageInfo pageInfo && (pageInfo.Type == "video" || pageInfo.Type == "article"))
             {
-                return DataTemplate;
+                return DataTemplate ?? new DataTemplate();
             }
 
             return new DataTemplate();
@@ -161,20 +161,20 @@ namespace WeiPo.Controls
                                 var url = info.Urls?.OrderBy(it => it.Key).FirstOrDefault().Value;
                                 if (string.IsNullOrEmpty(url))
                                 {
-                                    url = info.MediaInfo.Mp4720pMp4;
+                                    url = info.MediaInfo?.Mp4720pMp4;
                                 }
 
                                 if (string.IsNullOrEmpty(url))
                                 {
-                                    url = info.MediaInfo.StreamUrlHd;
+                                    url = info.MediaInfo?.StreamUrlHd;
                                 }
 
                                 if (string.IsNullOrEmpty(url))
                                 {
-                                    url = info.MediaInfo.StreamUrl;
+                                    url = info.MediaInfo?.StreamUrl;
                                 }
 
-                                if (string.IsNullOrEmpty(url) ||
+                                if (url == null || string.IsNullOrEmpty(url) ||
                                     !url.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
                                 {
                                     if (info.PageUrl != null)
@@ -243,7 +243,7 @@ namespace WeiPo.Controls
                 Singleton<BroadcastCenter>.Instance.Send(this, "image_clicked",
                     new ImageViewModel(
                         Status.Pics.Select(it =>
-                            new ImageModel(it.Url, it.Large.Url, it.Large.Geo.Width, it.Large.Geo.Height)).ToArray(),
+                            new ImageModel(it.Url ?? string.Empty, it.Large?.Url ?? string.Empty, it.Large?.Geo?.Width ?? double.MaxValue, it.Large?.Geo?.Height ?? double.MaxValue)).ToArray(),
                         index));
             }
         }

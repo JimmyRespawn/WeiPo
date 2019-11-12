@@ -73,8 +73,8 @@ namespace WeiPo.Controls
             Singleton<BroadcastCenter>.Instance.Send(this, "image_clicked",
                 new ImageViewModel(new[]
                 {
-                    new ImageModel(Comment.Pic.Url, Comment.Pic.Large.Url, Comment.Pic.Large.Geo.Width,
-                        Comment.Pic.Large.Geo.Height)
+                    new ImageModel(Comment.Pic.Url ?? string.Empty, Comment.Pic.Large?.Url ?? string.Empty, Comment.Pic.Large?.Geo?.Width ?? double.MaxValue,
+                        Comment.Pic.Large?.Geo?.Height ?? double.MaxValue)
                 }));
         }
 

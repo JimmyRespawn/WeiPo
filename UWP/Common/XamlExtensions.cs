@@ -16,8 +16,11 @@ namespace WeiPo.Common
             element.SetValue(TappedMessageProperty, value);
             element.Tapped += delegate(object sender, TappedRoutedEventArgs args)
             {
-                args.Handled = true;
-                Singleton<BroadcastCenter>.Instance.Send(sender, GetTappedMessage(sender as UIElement), GetTappedMessageParameter(sender as UIElement));
+                if (sender is UIElement element)
+                {
+                    args.Handled = true;
+                    Singleton<BroadcastCenter>.Instance.Send(sender, GetTappedMessage(element), GetTappedMessageParameter(element));
+                }
             };
         }
 

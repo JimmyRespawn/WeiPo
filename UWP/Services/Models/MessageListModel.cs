@@ -5,18 +5,18 @@ namespace WeiPo.Services.Models
     public class MessageListModel
     {
         [JsonProperty("user", NullValueHandling = NullValueHandling.Ignore)]
-        public UserModel User { get; set; }
+        public UserModel?  User { get; set; }
 
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public string?  CreatedAt { get; set; }
 
         [JsonProperty("scheme", NullValueHandling = NullValueHandling.Ignore)]
-        public string Scheme { get; set; }
+        public string?  Scheme { get; set; }
 
         [JsonProperty("unread", NullValueHandling = NullValueHandling.Ignore)]
-        public long Unread { get; set; }
+        public long?  Unread { get; set; }
 
         [JsonProperty("text", NullValueHandling = NullValueHandling.Ignore)]
-        public string Text { get; set; }
+        public string?  Text { get; set; }
     }
 }

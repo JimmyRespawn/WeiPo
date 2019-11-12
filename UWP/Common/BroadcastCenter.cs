@@ -7,13 +7,13 @@ namespace WeiPo.Common
 {
     internal class BroadcastCenter
     {
-        private readonly ConcurrentDictionary<Guid, (string message, Action<object, object> action)> _listeners =
-            new ConcurrentDictionary<Guid, (string message, Action<object, object> action)>();
+        private readonly ConcurrentDictionary<Guid, (string message, Action<object?, object?> action)> _listeners =
+            new ConcurrentDictionary<Guid, (string message, Action<object?, object?> action)>();
 
-        private readonly List<(string message, object sender, object args)> _pendingMessages =
-            new List<(string message, object sender, object args)>();
+        private readonly List<(string message, object? sender, object? args)> _pendingMessages =
+            new List<(string message, object? sender, object? args)>();
 
-        public void Send(object sender, string message, object args = null)
+        public void Send(object? sender, string message, object? args = null)
         {
             foreach (var item in _listeners.Where(it => it.Value.message == message))
             {
@@ -21,7 +21,7 @@ namespace WeiPo.Common
             }
         }
 
-        public void SendWithPendingMessage(object sender, string message, object args = null)
+        public void SendWithPendingMessage(object? sender, string message, object? args = null)
         {
             var listeners = _listeners.Where(it => it.Value.message == message).ToList();
             if (listeners.Any())
@@ -37,7 +37,7 @@ namespace WeiPo.Common
             }
         }
 
-        public Guid SubscribeWithPendingMessage(string message, Action<object, object> action)
+        public Guid SubscribeWithPendingMessage(string message, Action<object?, object?> action)
         {
             var pendingMessages = _pendingMessages.Where(it => it.message == message);
             foreach (var item in pendingMessages)
@@ -49,7 +49,7 @@ namespace WeiPo.Common
             return id;
         }
 
-        public Guid Subscribe(string message, Action<object, object> action)
+        public Guid Subscribe(string message, Action<object?, object?> action)
         {
             var id = Guid.NewGuid();
             _listeners.TryAdd(id, (message, action));

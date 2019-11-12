@@ -20,29 +20,29 @@ namespace WeiPo.ViewModels
         public static DockViewModel Instance { get; } = new DockViewModel();
 
         public PostWeiboViewModel PostWeiboViewModel { get; } = new PostWeiboViewModel();
-        public NotifyTask<ProfileData> MyProfile { get; private set; }
+        public NotifyTask<ProfileData?>? MyProfile { get; private set; }
 
-        public Lazy<NotifyTask<IEnumerable<IGrouping<string, EmojiModel>>>> Emoji { get; } = new Lazy<NotifyTask<IEnumerable<IGrouping<string, EmojiModel>>>>(() => NotifyTask.Create(LoadEmoji));
+        public Lazy<NotifyTask<IEnumerable<IGrouping<string, EmojiModel>>?>> Emoji { get; } = new Lazy<NotifyTask<IEnumerable<IGrouping<string, EmojiModel>>?>>(() => NotifyTask.Create(LoadEmoji));
 
-        private static async Task<IEnumerable<IGrouping<string, EmojiModel>>> LoadEmoji()
+        private static async Task<IEnumerable<IGrouping<string, EmojiModel>>?> LoadEmoji()
         {
             var emojiResponse = await Singleton<Api>.Instance.Emoji();
             var emojis = new List<EmojiModel>();
-            emojis.AddRange(emojiResponse.Data.Usual.SelectMany(it => it.Value));
-            emojis.AddRange(emojiResponse.Data.More.SelectMany(it => it.Value));
-            emojis.AddRange(emojiResponse.Data.Brand.Norm.SelectMany(it => it.Value));
-            return emojis.GroupBy(it => it.Category);
+            emojis.AddRange(emojiResponse?.Data?.Usual.SelectMany(it => it.Value) ?? new List<EmojiModel>());
+            emojis.AddRange(emojiResponse?.Data?.More.SelectMany(it => it.Value) ?? new List<EmojiModel>());
+            emojis.AddRange(emojiResponse?.Data?.Brand?.Norm.SelectMany(it => it.Value) ?? new List<EmojiModel>());
+            return emojis.GroupBy(it => it.Category ?? string.Empty);
         }
 
         public void ToMyProfile()
         {
-            if (MyProfile.IsCompleted && MyProfile.Result != null)
+            if (MyProfile?.IsCompleted == true && MyProfile.Result != null)
             {
-                Singleton<BroadcastCenter>.Instance.Send(this, "user_clicked", MyProfile.Result.UserInfo.Id);
+                Singleton<BroadcastCenter>.Instance.Send(this, "user_clicked", MyProfile.Result.UserInfo?.Id);
             }
         }
 
-        private async Task<ProfileData> LoadMe()
+        private async Task<ProfileData?> LoadMe()
         {
             return await Singleton<Api>.Instance.Me();
         }

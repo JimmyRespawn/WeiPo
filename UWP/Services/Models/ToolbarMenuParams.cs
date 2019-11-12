@@ -8,9 +8,9 @@ namespace WeiPo.Services.Models
         public long? Uid { get; set; }
 
         [JsonProperty("scheme", NullValueHandling = NullValueHandling.Ignore)]
-        public string Scheme { get; set; }
+        public string?  Scheme { get; set; }
 
         [JsonProperty("menu_list", NullValueHandling = NullValueHandling.Ignore)]
-        public MenuList[] MenuList { get; set; }
+        public MenuList[]?  MenuList { get; set; }
     }
 }

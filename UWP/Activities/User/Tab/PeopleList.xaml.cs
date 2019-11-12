@@ -30,7 +30,7 @@ namespace WeiPo.Activities.User.Tab
             InitializeComponent();
         }
 
-        public PeopleListViewModel ViewModel { get; private set; }
+        public PeopleListViewModel? ViewModel { get; private set; }
 
         public Services.Models.Tab TabData
         {
@@ -44,7 +44,7 @@ namespace WeiPo.Activities.User.Tab
             set => SetValue(TypeProperty, value);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -54,7 +54,7 @@ namespace WeiPo.Activities.User.Tab
             }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -69,7 +69,7 @@ namespace WeiPo.Activities.User.Tab
         {
             if (e.Property == TabDataProperty)
             {
-                (d as PeopleList).OnTabDataChanged();
+                (d as PeopleList)?.OnTabDataChanged();
             }
         }
     }

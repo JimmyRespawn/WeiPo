@@ -11,7 +11,7 @@ namespace WeiPo.Services.Models
         public long? NeedFollow { get; set; }
 
         [JsonProperty("trend_ext", NullValueHandling = NullValueHandling.Ignore)]
-        public string TrendExt { get; set; }
+        public string?  TrendExt { get; set; }
 
         [JsonProperty("trend_type", NullValueHandling = NullValueHandling.Ignore)]
         public long? TrendType { get; set; }
@@ -23,6 +23,6 @@ namespace WeiPo.Services.Models
         public long? AllowReplenish { get; set; }
 
         [JsonProperty("api_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string ApiType { get; set; }
+        public string?  ApiType { get; set; }
     }
 }

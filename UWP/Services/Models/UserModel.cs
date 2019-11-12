@@ -6,78 +6,78 @@ namespace WeiPo.Services.Models
     public class UserModel
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public long Id { get; set; }
+        public long?  Id { get; set; }
 
         [JsonProperty("screen_name", NullValueHandling = NullValueHandling.Ignore)]
-        public string ScreenName { get; set; }
+        public string?  ScreenName { get; set; }
 
         [JsonProperty("profile_image_url", NullValueHandling = NullValueHandling.Ignore)]
-        public string ProfileImageUrl { get; set; }
+        public string?  ProfileImageUrl { get; set; }
 
         [JsonProperty("profile_url", NullValueHandling = NullValueHandling.Ignore)]
-        public string ProfileUrl { get; set; }
+        public string?  ProfileUrl { get; set; }
 
         [JsonProperty("statuses_count", NullValueHandling = NullValueHandling.Ignore)]
-        public long StatusesCount { get; set; }
+        public long?  StatusesCount { get; set; }
 
         [JsonProperty("verified", NullValueHandling = NullValueHandling.Ignore)]
-        public bool Verified { get; set; }
+        public bool?  Verified { get; set; }
 
         [JsonProperty("verified_type", NullValueHandling = NullValueHandling.Ignore)]
-        public long VerifiedType { get; set; }
+        public long?  VerifiedType { get; set; }
 
         [JsonProperty("verified_type_ext", NullValueHandling = NullValueHandling.Ignore)]
-        public long VerifiedTypeExt { get; set; }
+        public long?  VerifiedTypeExt { get; set; }
 
         [JsonProperty("verified_reason", NullValueHandling = NullValueHandling.Ignore)]
-        public string VerifiedReason { get; set; }
+        public string?  VerifiedReason { get; set; }
 
         [JsonProperty("close_blue_v", NullValueHandling = NullValueHandling.Ignore)]
-        public bool CloseBlueV { get; set; }
+        public bool?  CloseBlueV { get; set; }
 
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string?  Description { get; set; }
 
         [JsonProperty("gender", NullValueHandling = NullValueHandling.Ignore)]
-        public string Gender { get; set; }
+        public string?  Gender { get; set; }
 
         [JsonProperty("mbtype", NullValueHandling = NullValueHandling.Ignore)]
-        public long Mbtype { get; set; }
+        public long?  Mbtype { get; set; }
 
         [JsonProperty("urank", NullValueHandling = NullValueHandling.Ignore)]
-        public long Urank { get; set; }
+        public long?  Urank { get; set; }
 
         [JsonProperty("mbrank", NullValueHandling = NullValueHandling.Ignore)]
-        public long Mbrank { get; set; }
+        public long?  Mbrank { get; set; }
 
         [JsonProperty("follow_me", NullValueHandling = NullValueHandling.Ignore)]
-        public bool FollowMe { get; set; }
+        public bool?  FollowMe { get; set; }
 
         [JsonProperty("following", NullValueHandling = NullValueHandling.Ignore)]
-        public bool Following { get; set; }
+        public bool?  Following { get; set; }
 
         [JsonProperty("followers_count", NullValueHandling = NullValueHandling.Ignore)]
-        public long FollowersCount { get; set; }
+        public long?  FollowersCount { get; set; }
 
         [JsonProperty("follow_count", NullValueHandling = NullValueHandling.Ignore)]
-        public long FollowCount { get; set; }
+        public long?  FollowCount { get; set; }
 
         [JsonProperty("cover_image_phone", NullValueHandling = NullValueHandling.Ignore)]
-        public string CoverImagePhone { get; set; }
+        public string?  CoverImagePhone { get; set; }
 
         [JsonProperty("avatar_hd", NullValueHandling = NullValueHandling.Ignore)]
-        public string AvatarHd { get; set; }
+        public string?  AvatarHd { get; set; }
 
         [JsonProperty("avatar_large", NullValueHandling = NullValueHandling.Ignore)]
-        public string AvatarLarge { get; set; }
+        public string?  AvatarLarge { get; set; }
 
         [JsonProperty("like", NullValueHandling = NullValueHandling.Ignore)]
-        public bool Like { get; set; }
+        public bool?  Like { get; set; }
 
         [JsonProperty("like_me", NullValueHandling = NullValueHandling.Ignore)]
-        public bool LikeMe { get; set; }
+        public bool?  LikeMe { get; set; }
 
         [JsonProperty("badge", NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, long> Badge { get; set; }
+        public Dictionary<string, long>? Badge { get; set; }
     }
 }

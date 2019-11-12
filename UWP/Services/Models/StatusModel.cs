@@ -7,22 +7,22 @@ namespace WeiPo.Services.Models
 {
     public class StatusModel : ICanReply, INotifyPropertyChanged
     {
-        private string _longText;
+        private string? _longText;
 
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public string?  CreatedAt { get; set; }
 
         [JsonProperty("can_edit", NullValueHandling = NullValueHandling.Ignore)]
-        public bool CanEdit { get; set; }
+        public bool?  CanEdit { get; set; }
 
         [JsonProperty("show_additional_indication", NullValueHandling = NullValueHandling.Ignore)]
-        public long ShowAdditionalIndication { get; set; }
+        public long?  ShowAdditionalIndication { get; set; }
 
         [JsonProperty("text", NullValueHandling = NullValueHandling.Ignore)]
-        public string Text { get; set; }
+        public string?  Text { get; set; }
 
         [JsonIgnore]
-        public string LongText
+        public string? LongText
         {
             get
             {
@@ -40,128 +40,128 @@ namespace WeiPo.Services.Models
         }
 
         [JsonProperty("textLength", NullValueHandling = NullValueHandling.Ignore)]
-        public long TextLength { get; set; }
+        public long?  TextLength { get; set; }
 
         [JsonProperty("source", NullValueHandling = NullValueHandling.Ignore)]
-        public string Source { get; set; }
+        public string?  Source { get; set; }
 
         [JsonProperty("favorited", NullValueHandling = NullValueHandling.Ignore)]
-        public bool Favorited { get; set; }
+        public bool?  Favorited { get; set; }
 
         [JsonProperty("pic_ids", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> PicIds { get; set; }
+        public List<string>?  PicIds { get; set; }
 
         [JsonProperty("pic_types", NullValueHandling = NullValueHandling.Ignore)]
-        public string PicTypes { get; set; }
+        public string?  PicTypes { get; set; }
 
         [JsonProperty("is_paid", NullValueHandling = NullValueHandling.Ignore)]
-        public bool IsPaid { get; set; }
+        public bool?  IsPaid { get; set; }
 
         [JsonProperty("mblog_vip_type", NullValueHandling = NullValueHandling.Ignore)]
-        public long MblogVipType { get; set; }
+        public long?  MblogVipType { get; set; }
 
         [JsonProperty("user", NullValueHandling = NullValueHandling.Ignore)]
-        public UserModel User { get; set; }
+        public UserModel?  User { get; set; }
 
         [JsonProperty("reposts_count", NullValueHandling = NullValueHandling.Ignore)]
-        public long RepostsCount { get; set; }
+        public long?  RepostsCount { get; set; }
 
         [JsonProperty("comments_count", NullValueHandling = NullValueHandling.Ignore)]
-        public long CommentsCount { get; set; }
+        public long?  CommentsCount { get; set; }
 
         [JsonProperty("attitudes_count", NullValueHandling = NullValueHandling.Ignore)]
-        public long AttitudesCount { get; set; }
+        public long?  AttitudesCount { get; set; }
 
         [JsonProperty("pending_approval_count", NullValueHandling = NullValueHandling.Ignore)]
-        public long PendingApprovalCount { get; set; }
+        public long?  PendingApprovalCount { get; set; }
 
         [JsonProperty("isLongText", NullValueHandling = NullValueHandling.Ignore)]
-        public bool IsLongText { get; set; }
+        public bool?  IsLongText { get; set; }
 
         [JsonProperty("reward_exhibition_type", NullValueHandling = NullValueHandling.Ignore)]
-        public long RewardExhibitionType { get; set; }
+        public long?  RewardExhibitionType { get; set; }
 
         [JsonProperty("hide_flag", NullValueHandling = NullValueHandling.Ignore)]
-        public long HideFlag { get; set; }
+        public long?  HideFlag { get; set; }
 
         [JsonProperty("visible", NullValueHandling = NullValueHandling.Ignore)]
-        public Visible Visible { get; set; }
+        public Visible?  Visible { get; set; }
 
         [JsonProperty("darwin_tags", NullValueHandling = NullValueHandling.Ignore)]
-        public List<object> DarwinTags { get; set; }
+        public List<object>? DarwinTags { get; set; }
 
         [JsonProperty("mblogtype", NullValueHandling = NullValueHandling.Ignore)]
-        public long Mblogtype { get; set; }
+        public long?  Mblogtype { get; set; }
 
         [JsonProperty("more_info_type", NullValueHandling = NullValueHandling.Ignore)]
-        public long MoreInfoType { get; set; }
+        public long?  MoreInfoType { get; set; }
 
         [JsonProperty("cardid", NullValueHandling = NullValueHandling.Ignore)]
-        public string Cardid { get; set; }
+        public string?  Cardid { get; set; }
 
         [JsonProperty("number_display_strategy", NullValueHandling = NullValueHandling.Ignore)]
-        public NumberDisplayStrategy NumberDisplayStrategy { get; set; }
+        public NumberDisplayStrategy?  NumberDisplayStrategy { get; set; }
 
         [JsonProperty("content_auth", NullValueHandling = NullValueHandling.Ignore)]
-        public long ContentAuth { get; set; }
+        public long?  ContentAuth { get; set; }
 
         [JsonProperty("pic_num", NullValueHandling = NullValueHandling.Ignore)]
-        public long PicNum { get; set; }
+        public long?  PicNum { get; set; }
 
         [JsonProperty("bid", NullValueHandling = NullValueHandling.Ignore)]
-        public string Bid { get; set; }
+        public string?  Bid { get; set; }
 
         [JsonProperty("retweeted_status", NullValueHandling = NullValueHandling.Ignore)]
-        public StatusModel RetweetedStatus { get; set; }
+        public StatusModel?  RetweetedStatus { get; set; }
 
         [JsonProperty("raw_text", NullValueHandling = NullValueHandling.Ignore)]
-        public string RawText { get; set; }
+        public string?  RawText { get; set; }
 
         [JsonProperty("pid", NullValueHandling = NullValueHandling.Ignore)]
-        public long Pid { get; set; }
+        public long?  Pid { get; set; }
 
         [JsonProperty("pidstr", NullValueHandling = NullValueHandling.Ignore)]
-        public string Pidstr { get; set; }
+        public string?  Pidstr { get; set; }
 
         [JsonProperty("pic_focus_point", NullValueHandling = NullValueHandling.Ignore)]
-        public List<PicFocusPoint> PicFocusPoint { get; set; }
+        public List<PicFocusPoint>? PicFocusPoint { get; set; }
 
         [JsonProperty("pic_rectangle_object", NullValueHandling = NullValueHandling.Ignore)]
-        public List<object> PicRectangleObject { get; set; }
+        public List<object>? PicRectangleObject { get; set; }
 
         [JsonProperty("pic_flag", NullValueHandling = NullValueHandling.Ignore)]
-        public long PicFlag { get; set; }
+        public long?  PicFlag { get; set; }
 
         [JsonProperty("thumbnail_pic", NullValueHandling = NullValueHandling.Ignore)]
-        public string ThumbnailPic { get; set; }
+        public string?  ThumbnailPic { get; set; }
 
         [JsonProperty("bmiddle_pic", NullValueHandling = NullValueHandling.Ignore)]
-        public string BmiddlePic { get; set; }
+        public string?  BmiddlePic { get; set; }
 
         [JsonProperty("original_pic", NullValueHandling = NullValueHandling.Ignore)]
-        public string OriginalPic { get; set; }
+        public string?  OriginalPic { get; set; }
 
         [JsonProperty("page_info", NullValueHandling = NullValueHandling.Ignore)]
-        public PageInfo PageInfo { get; set; }
+        public PageInfo?  PageInfo { get; set; }
 
         [JsonProperty("pics", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Pic> Pics { get; set; }
+        public List<Pic>? Pics { get; set; }
 
         [JsonProperty("reward_scheme", NullValueHandling = NullValueHandling.Ignore)]
-        public string RewardScheme { get; set; }
+        public string?  RewardScheme { get; set; }
 
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
-        public TitleModel Title { get; set; }
+        public TitleModel?  Title { get; set; }
 
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public string Id { get; set; }
+        public string?  Id { get; set; }
 
         [JsonProperty("mid", NullValueHandling = NullValueHandling.Ignore)]
-        public string Mid { get; set; }
+        public string?  Mid { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

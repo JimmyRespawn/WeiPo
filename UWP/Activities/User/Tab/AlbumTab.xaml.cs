@@ -25,13 +25,12 @@ namespace WeiPo.Activities.User.Tab
         protected override void OnTapped(TappedRoutedEventArgs e)
         {
             base.OnTapped(e);
-            if (e.OriginalSource is FrameworkElement element && element.DataContext is PicWall model && ViewModel is AlbumTabViewModel viewModel)
+            if (e.OriginalSource is FrameworkElement element && element.DataContext is PicWall model && ViewModel is AlbumTabViewModel viewModel && viewModel.DataSource != null)
             {
                 e.Handled = true;
                 var index = viewModel.DataSource.IndexOf(model);
-                
                 Singleton<BroadcastCenter>.Instance.Send(this, "image_clicked",
-                    new ImageViewModel(viewModel.DataSource.Select(it => new ImageModel(it.PicMiddle, it.PicBig)).ToArray(), index));
+                    new ImageViewModel(viewModel.DataSource.Select(it => new ImageModel(it.PicMiddle ?? string.Empty, it.PicBig ?? string.Empty)).ToArray(), index));
             }
         }
     }

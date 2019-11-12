@@ -27,8 +27,8 @@ namespace WeiPo.ViewModels
                 return new List<StatusModel>();
             }
             var list = result.Statuses;
-            _maxId = result.NextCursor;
-            return list;
+            _maxId = result.NextCursor ?? 0L;
+            return list ?? new List<StatusModel>();
         }
     }
 

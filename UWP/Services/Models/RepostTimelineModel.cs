@@ -6,15 +6,15 @@ namespace WeiPo.Services.Models
     public partial class RepostTimelineModel
     {
         [JsonProperty("data")]
-        public List<StatusModel> Data { get; set; }
+        public List<StatusModel>?  Data { get; set; }
 
         [JsonProperty("total_number")]
-        public long TotalNumber { get; set; }
+        public long?  TotalNumber { get; set; }
 
         [JsonProperty("hot_total_number")]
-        public long HotTotalNumber { get; set; }
+        public long?  HotTotalNumber { get; set; }
 
         [JsonProperty("max")]
-        public long Max { get; set; }
+        public long?  Max { get; set; }
     }
 }

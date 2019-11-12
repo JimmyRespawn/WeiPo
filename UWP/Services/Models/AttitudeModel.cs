@@ -5,7 +5,7 @@ namespace WeiPo.Services.Models
     public class AttitudeModel
     {
         [JsonProperty("idStr", NullValueHandling = NullValueHandling.Ignore)]
-        public string IdStr { get; set; }
+        public string? IdStr { get; set; }
 
         [JsonProperty("attitude_type", NullValueHandling = NullValueHandling.Ignore)]
         public long? AttitudeType { get; set; }
@@ -17,10 +17,10 @@ namespace WeiPo.Services.Models
         public long? AttitudeMask { get; set; }
 
         [JsonProperty("last_attitude", NullValueHandling = NullValueHandling.Ignore)]
-        public string LastAttitude { get; set; }
+        public string? LastAttitude { get; set; }
 
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public string? CreatedAt { get; set; }
 
         [JsonProperty("source_type", NullValueHandling = NullValueHandling.Ignore)]
         public long? SourceType { get; set; }
@@ -29,15 +29,15 @@ namespace WeiPo.Services.Models
         public long? Id { get; set; }
 
         [JsonProperty("source", NullValueHandling = NullValueHandling.Ignore)]
-        public string Source { get; set; }
+        public string? Source { get; set; }
 
         [JsonProperty("user", NullValueHandling = NullValueHandling.Ignore)]
-        public UserModel User { get; set; }
+        public UserModel? User { get; set; }
 
         [JsonProperty("attitude", NullValueHandling = NullValueHandling.Ignore)]
-        public string Attitude { get; set; }
+        public string? Attitude { get; set; }
 
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
-        public StatusModel Status { get; set; }
+        public StatusModel? Status { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace WeiPo.Controls
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             nameof(Text), typeof(string), typeof(ChipView), new PropertyMetadata(default(string)));
 
-        private Button _closeButton;
+        private Button? _closeButton;
 
         public ChipView()
         {
@@ -72,7 +72,7 @@ namespace WeiPo.Controls
             set => SetValue(SymbolProperty, value);
         }
 
-        public event EventHandler CloseRequest;
+        public event EventHandler? CloseRequest;
 
 
         protected override void OnApplyTemplate()

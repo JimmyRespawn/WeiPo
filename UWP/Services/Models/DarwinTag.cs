@@ -5,23 +5,23 @@ namespace WeiPo.Services.Models
     public class DarwinTag
     {
         [JsonProperty("object_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string ObjectType { get; set; }
+        public string?  ObjectType { get; set; }
 
         [JsonProperty("object_id", NullValueHandling = NullValueHandling.Ignore)]
-        public string ObjectId { get; set; }
+        public string?  ObjectId { get; set; }
 
         [JsonProperty("display_name", NullValueHandling = NullValueHandling.Ignore)]
-        public string DisplayName { get; set; }
+        public string?  DisplayName { get; set; }
 
-        [JsonProperty("enterprise_uid")] public object EnterpriseUid { get; set; }
+        // [JsonProperty("enterprise_uid")] public object? EnterpriseUid { get; set; }
 
         [JsonProperty("pc_url", NullValueHandling = NullValueHandling.Ignore)]
-        public string PcUrl { get; set; }
+        public string?  PcUrl { get; set; }
 
         [JsonProperty("mapi_url", NullValueHandling = NullValueHandling.Ignore)]
-        public string MapiUrl { get; set; }
+        public string?  MapiUrl { get; set; }
 
         [JsonProperty("bd_object_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string BdObjectType { get; set; }
+        public string?  BdObjectType { get; set; }
     }
 }

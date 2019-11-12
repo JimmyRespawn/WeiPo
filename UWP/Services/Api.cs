@@ -19,7 +19,7 @@ namespace WeiPo.Services
 {
     internal static class ApiExtensions
     {
-        public static async Task<T> GetData<T>(this Task<WeiboResponse<T>> task) where T : class
+        public static async Task<T?> GetData<T>(this Task<WeiboResponse<T>> task) where T : class
         {
             try
             {
@@ -43,9 +43,13 @@ namespace WeiPo.Services
     {
         public const string HOST = "https://m.weibo.cn";
 
-        public async Task<JObject> Comment(string content, ICanReply status, string? picId = null)
+        public async Task<JObject?> Comment(string content, ICanReply status, string? picId = null)
         {
             var configResult = await Config();
+            if (configResult == null)
+            {
+                return null;
+            }
             return await $"{HOST}/api/comments/create"
                 .WithHeader("Referer",
                     $"{HOST}/compose/comment?id={status.Id}{(string.IsNullOrEmpty(picId) ? "" : $"&pids={picId}")}")
@@ -61,23 +65,27 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<EmojiResponse> Emoji()
+        public async Task<EmojiResponse?> Emoji()
         {
             return await "https://weibo.com/aj/mblog/face?type=face"
                 .GetAsync()
                 .ReceiveJson<EmojiResponse>();
         }
 
-        public async Task<JObject> Reply(string content, CommentModel item, string picId = null)
+        public async Task<JObject?> Reply(string content, CommentModel item, string? picId = null)
         {
             var configResult = await Config();
+            if (configResult == null)
+            {
+                return null;
+            }
             return await $"{HOST}/api/comments/reply"
                 .WithHeader("Referer",
                     $"{HOST}/compose/reply?id={item.Id}{(string.IsNullOrEmpty(picId) ? "" : $"&pids={picId}")}")
                 .PostUrlEncodedAsync(new
                 {
-                    id = item.Status.Id,
-                    mid = item.Status.Id,
+                    id = item.Status?.Id,
+                    mid = item.Status?.Id,
                     content,
                     cid = item.Id,
                     reply = item.Id,
@@ -88,7 +96,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<ConfigModel> Config()
+        public async Task<ConfigModel?> Config()
         {
             return await $"{HOST}/api/config"
                 .GetAsync()
@@ -96,7 +104,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<LongTextModel> Extend(long id)
+        public async Task<LongTextModel?> Extend(long id)
         {
             return await $"{HOST}/statuses/extend"
                 .SetQueryParams(new
@@ -108,7 +116,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<JObject> Fans(long uid, int page = 1)
+        public async Task<JObject?> Fans(long uid, int page = 1)
         {
             var info = await $"{HOST}/profile/info"
                 .SetQueryParams(new
@@ -117,6 +125,10 @@ namespace WeiPo.Services
                 })
                 .GetAsync()
                 .ReceiveJson<WeiboResponse<JObject>>();
+            if (info.Data == null)
+            {
+                return null;
+            }
             var container = info.Data.Value<string>("fans");
             container = container.Substring(container.IndexOf('?') + 1);
             return await $"{HOST}/api/container/getSecond?{container}"
@@ -126,7 +138,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<JObject> Follow(long uid, int page = 1)
+        public async Task<JObject?> Follow(long uid, int page = 1)
         {
             var info = await $"{HOST}/profile/info"
                 .SetQueryParams(new
@@ -135,6 +147,10 @@ namespace WeiPo.Services
                 })
                 .GetAsync()
                 .ReceiveJson<WeiboResponse<JObject>>();
+            if (info.Data == null)
+            {
+                return null;
+            }
             var container = info.Data.Value<string>("follow");
             container = container.Substring(container.IndexOf('?') + 1);
             return await $"{HOST}/api/container/getSecond?{container}"
@@ -144,7 +160,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<List<AttitudeModel>> GetAttitude(int page = 1)
+        public async Task<List<AttitudeModel>?> GetAttitude(int page = 1)
         {
             return await $"{HOST}/message/attitude"
                 .SetQueryParams(new
@@ -156,7 +172,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<List<CommentModel>> GetComment(int page = 1)
+        public async Task<List<CommentModel>?> GetComment(int page = 1)
         {
             return await $"{HOST}/message/cmt"
                 .SetQueryParams(new
@@ -174,7 +190,7 @@ namespace WeiPo.Services
             return Singleton<Storage>.Instance.Load("usercookie", string.Empty).FromJson<Dictionary<string, string>>();
         }
 
-        public async Task<List<StatusModel>> GetMentionsAt(int page = 1)
+        public async Task<List<StatusModel>?> GetMentionsAt(int page = 1)
         {
             return await $"{HOST}/message/mentionsAt"
                 .SetQueryParams(new
@@ -186,7 +202,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<List<CommentModel>> GetMentionsCmt(int page = 1)
+        public async Task<List<CommentModel>?> GetMentionsCmt(int page = 1)
         {
             return await $"{HOST}/message/mentionsCmt"
                 .SetQueryParams(new
@@ -198,7 +214,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<List<MessageListModel>> GetMessageList(int page = 1)
+        public async Task<List<MessageListModel>?> GetMessageList(int page = 1)
         {
             return await $"{HOST}/message/msglist"
                 .SetQueryParams(new
@@ -210,7 +226,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<List<CommentModel>> GetMyComment(int page = 1)
+        public async Task<List<CommentModel>?> GetMyComment(int page = 1)
         {
             return await $"{HOST}/message/myCmt"
                 .SetQueryParams(new
@@ -222,7 +238,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<StoryModel> GetStoryVideoLink(string pageInfoLink)
+        public async Task<StoryModel?> GetStoryVideoLink(string pageInfoLink)
         {
             return await pageInfoLink.Replace("/s/video/index", "/s/video/object")
                 .GetAsync()
@@ -230,7 +246,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<HotflowModel> Hotflow(long id, long mid, long max_id= 0)
+        public async Task<HotflowModel?> Hotflow(long id, long mid, long max_id= 0)
         {
             return await $"{HOST}/comments/hotflow"
                 .SetQueryParams(new
@@ -245,7 +261,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<HotflowChildModel> HotflowChild(long cid, long max_id)
+        public async Task<HotflowChildModel?> HotflowChild(long cid, long max_id)
         {
             return await $"{HOST}/comments/hotFlowChild"
                 .SetQueryParams(new
@@ -257,15 +273,19 @@ namespace WeiPo.Services
                 .ReceiveJson<HotflowChildModel>();
         }
 
-        public async Task<ProfileData> Me()
+        public async Task<ProfileData?> Me()
         {
             var result = await Config();
+            if (result == null)
+            {
+                return null;
+            }
             var uidStr = result.Uid;
             long.TryParse(uidStr, out var uid);
             return await Profile(uid);
         }
 
-        public async Task<JObject> MyFans(int since_id = 0)
+        public async Task<JObject?> MyFans(int since_id = 0)
         {
             return await $"{HOST}/api/container/getIndex"
                 .SetQueryParams(new
@@ -278,7 +298,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<ProfileData> Profile(long id)
+        public async Task<ProfileData?> Profile(long id)
         {
             return await $"{HOST}/api/container/getIndex".SetQueryParams(new
                 {
@@ -290,12 +310,17 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<ProfileData> Profile(string name)
+        public async Task<ProfileData?> Profile(string name)
         {
-            return await Profile(await UserId(name));
+            var userId = await UserId(name);
+            if (userId == null || !userId.HasValue)
+            {
+                return null;
+            }
+            return await Profile(userId.Value);
         }
 
-        public async Task<JObject> ProfileTab(long id, string containerid, long since_id = 0)
+        public async Task<JObject?> ProfileTab(long id, string containerid, long since_id = 0)
         {
             return await $"{HOST}/api/container/getIndex".SetQueryParams(new
                 {
@@ -309,9 +334,13 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<JObject> Repost(string content, ICanReply status, string picId = null)
+        public async Task<JObject?> Repost(string content, ICanReply status, string? picId = null)
         {
             var configResult = await Config();
+            if (configResult == null)
+            {
+                return null;
+            }
             return await $"{HOST}/api/statuses/repost"
                 .WithHeader("Referer",
                     $"{HOST}/compose/repost?id={status.Id}{(string.IsNullOrEmpty(picId) ? "" : $"&pids={picId}")}")
@@ -327,7 +356,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<RepostTimelineModel> RepostTimeline(long id, int page = 1)
+        public async Task<RepostTimelineModel?> RepostTimeline(long id, int page = 1)
         {
             return await $"{HOST}/api/statuses/repostTimeline"
                 .SetQueryParams(new
@@ -340,7 +369,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<TimelineData> Timeline(long maxid = 0,
+        public async Task<TimelineData?> Timeline(long maxid = 0,
             CancellationToken cancellationToken = new CancellationToken())
         {
             
@@ -350,7 +379,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<UnreadModel> Unread()
+        public async Task<UnreadModel?> Unread()
         {
             return await $"{HOST}/api/remind/unread"
                 .SetQueryParam("t", DateTimeOffset.UtcNow.ToUnixTimeSeconds())
@@ -359,9 +388,13 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<JObject> Update(string content, params string[] pics)
+        public async Task<JObject?> Update(string content, params string?[] pics)
         {
             var configResult = await Config();
+            if (configResult == null)
+            {
+                return null;
+            }
             return await $"{HOST}/api/statuses/update"
                 .WithHeader("Referer", $"{HOST}/compose/?{(!pics.Any() ? "" : $"&pids={string.Join(",", pics)}")}")
                 .PostUrlEncodedAsync(new
@@ -374,9 +407,13 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<UploadPicModel> UploadPic(StorageFile file)
+        public async Task<UploadPicModel?> UploadPic(StorageFile file)
         {
             var configResult = await Config();
+            if (configResult == null)
+            {
+                return null;
+            }
             var st = configResult.St;
             using var fileStream = await file.OpenStreamForReadAsync();
 
@@ -390,7 +427,7 @@ namespace WeiPo.Services
                 }).ReceiveJson<UploadPicModel>();
         }
 
-        public async Task<long> UserId(string name)
+        public async Task<long?> UserId(string name)
         {
             using var client = new HttpClient();
             var response =
@@ -405,9 +442,13 @@ namespace WeiPo.Services
             return uid;
         }
 
-        public async Task<UserModel> Unfollow(long uid)
+        public async Task<UserModel?> Unfollow(long uid)
         {
             var configResult = await Config();
+            if (configResult == null)
+            {
+                return null;
+            }
             var st = configResult.St;
             return await $"{HOST}/api/friendships/destory"
                 .PostUrlEncodedAsync(new
@@ -419,9 +460,13 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<UserModel> Follow(long uid)
+        public async Task<UserModel?> Follow(long uid)
         {
             var configResult = await Config();
+            if (configResult == null)
+            {
+                return null;
+            }
             var st = configResult.St;
             return await $"{HOST}/api/friendships/create"
                 .PostUrlEncodedAsync(new
@@ -433,7 +478,7 @@ namespace WeiPo.Services
                 .GetData();
         }
 
-        public async Task<JObject> PhotoAll(long uid, string containerid, int page = 1)
+        public async Task<JObject?> PhotoAll(long uid, string containerid, int page = 1)
         {
 
             return await $"{HOST}/api/container/getSecond"

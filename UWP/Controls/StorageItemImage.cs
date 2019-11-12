@@ -36,7 +36,7 @@ namespace WeiPo.Controls
             set => SetValue(StorageItemProperty, value);
         }
 
-        private Image ImageView { get; set; }
+        private Image? ImageView { get; set; }
 
         protected override void OnApplyTemplate()
         {
@@ -46,11 +46,18 @@ namespace WeiPo.Controls
 
         private static void OnStorageItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as StorageItemImage).OnStorageItemChanged(e.NewValue as IStorageItem);
+            if (e.NewValue is IStorageItem item)
+            {
+                (d as StorageItemImage)?.OnStorageItemChanged(item);                
+            }
         }
 
         private async void OnStorageItemChanged(IStorageItem storageItem)
         {
+            if (ImageView == null)
+            {
+                return;
+            }
             switch (storageItem)
             {
                 case StorageFolder folder:

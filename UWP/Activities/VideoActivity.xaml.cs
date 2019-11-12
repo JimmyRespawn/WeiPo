@@ -14,7 +14,7 @@ namespace WeiPo.Activities
             InitializeComponent();
         }
 
-        public string VideoPath { get; set; }
+        public string? VideoPath { get; set; }
 
         protected override void OnCreate(object parameter)
         {

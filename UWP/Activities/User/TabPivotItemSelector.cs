@@ -10,11 +10,11 @@ namespace WeiPo.Activities.User
 
     internal class TabPivotItemSelector : DataTemplateSelector
     {
-        public TabPivotDictionary Mapping { get; set; }
+        public TabPivotDictionary? Mapping { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            if (item is Services.Models.Tab tab && Mapping != null &&
+            if (item is Services.Models.Tab tab && Mapping != null && tab.TabType != null &&
                 Mapping.TryGetValue(tab.TabType, out var template))
             {
                 return template;

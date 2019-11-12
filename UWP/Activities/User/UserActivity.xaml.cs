@@ -16,7 +16,7 @@ namespace WeiPo.Activities.User
             InitializeComponent();
         }
 
-        public UserViewModel ViewModel { get; private set; }
+        public UserViewModel? ViewModel { get; private set; }
 
         protected override void OnCreate(object parameter)
         {
@@ -39,7 +39,7 @@ namespace WeiPo.Activities.User
         {
             //Don't know why data binding not work for Pivot.SelectedIndex property, here is a workaround
             Dispatcher.RunAsync(CoreDispatcherPriority.Low,
-                () => ContentPivot.SelectedIndex = ViewModel.Profile.TabsInfo.SelectedTab);
+                () => ContentPivot.SelectedIndex = ViewModel?.Profile?.TabsInfo?.SelectedTab ?? 0);
         }
     }
 }

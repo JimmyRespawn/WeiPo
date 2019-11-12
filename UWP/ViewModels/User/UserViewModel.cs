@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.Extensions;
@@ -29,9 +30,9 @@ namespace WeiPo.ViewModels.User
             Init(id);
         }
 
-        public bool IsLoading { get; private set; }
+        public bool IsLoading { get; private set; } = false;
 
-        public ProfileData Profile { get; private set; }
+        public ProfileData? Profile { get; private set; }
 
         [DependsOn(nameof(Profile))]
         public Services.Models.Tab[] Tabs
@@ -44,15 +45,15 @@ namespace WeiPo.ViewModels.User
                     {
                         Title = "Follow".GetLocalized(),
                         TabType = "follow",
-                        Containerid = Profile.UserInfo.Id.ToString()
+                        Containerid = Profile.UserInfo?.Id.ToString()
                     },
                     new Services.Models.Tab
                     {
                         Title = "Fans".GetLocalized(),
                         TabType = "fans",
-                        Containerid = Profile.UserInfo.Id.ToString()
+                        Containerid = Profile.UserInfo?.Id.ToString()
                     }
-                }).ToArray();
+                })?.ToArray() ?? new List<Services.Models.Tab>().ToArray();
             }
         }
 
@@ -62,7 +63,7 @@ namespace WeiPo.ViewModels.User
             get
             {
                 //TODO:Not a good idea
-                return Profile?.UserInfo?.Id != DockViewModel.Instance.MyProfile.Result.UserInfo.Id;
+                return Profile?.UserInfo?.Id != null && Profile?.UserInfo?.Id != DockViewModel.Instance.MyProfile?.Result?.UserInfo?.Id;
             }
         }
 
@@ -70,34 +71,34 @@ namespace WeiPo.ViewModels.User
 
         public async Task UpdateFollowState()
         {
-            if (IsLoading)
+            if (IsLoading || Profile == null || Profile.UserInfo?.Following == null || Profile.UserInfo.Id == null)
             {
                 return;
             }
             IsLoading = true;
-            UserModel model;
-            if (Profile.UserInfo.Following)
+            UserModel? model;
+            if (Profile.UserInfo.Following.Value)
             {
-                model = await Singleton<Api>.Instance.Unfollow(Profile.UserInfo.Id);
+                model = await Singleton<Api>.Instance.Unfollow(Profile.UserInfo.Id.Value);
             }
             else
             {
-                model = await Singleton<Api>.Instance.Follow(Profile.UserInfo.Id);
+                model = await Singleton<Api>.Instance.Follow(Profile.UserInfo.Id.Value);
             }
             Profile.UserInfo.Following = !Profile.UserInfo.Following;
             OnPropertyChanged(nameof(Profile));
             IsLoading = false;
         }
 
-        private async void Init(long id)
+        private async void Init(long? id)
         {
-            if (IsLoading)
+            if (IsLoading || id == null)
             {
                 return;
             }
 
             IsLoading = true;
-            await InitProfile(id);
+            await InitProfile(id.Value);
             IsLoading = false;
         }
 
@@ -110,7 +111,10 @@ namespace WeiPo.ViewModels.User
 
             IsLoading = true;
             var id = await Singleton<Api>.Instance.UserId(name);
-            await InitProfile(id);
+            if (id != null)
+            {
+                await InitProfile(id.Value);                
+            }
             IsLoading = false;
         }
 

@@ -14,10 +14,10 @@ namespace WeiPo.ViewModels
 {
     public class MessagingCenterDockItemDataSource<T> : IIncrementalSource<T>
     {
-        private readonly Func<int, Task<IEnumerable<T>>> _func;
+        private readonly Func<int, Task<IEnumerable<T>?>> _func;
         private readonly string _postMessageId;
 
-        public MessagingCenterDockItemDataSource(string postMessageId, Func<int, Task<IEnumerable<T>>> func)
+        public MessagingCenterDockItemDataSource(string postMessageId, Func<int, Task<IEnumerable<T>?>> func)
         {
             _postMessageId = postMessageId;
             _func = func;
@@ -32,8 +32,7 @@ namespace WeiPo.ViewModels
                 Singleton<BroadcastCenter>.Instance.Send(this, _postMessageId);
             }
 
-            var result = await _func.Invoke(pageIndex + 1);
-            return result;
+            return await _func.Invoke(pageIndex + 1) ?? new List<T>();
         }
     }
 

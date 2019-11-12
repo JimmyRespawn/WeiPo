@@ -64,7 +64,7 @@ namespace WeiPo.ViewModels
 
         public PostType PostType { get; set; }
 
-        public ICanReply ReplyModel { get; private set; }
+        public ICanReply? ReplyModel { get; private set; }
         public int MaxImageFileCount { get; set; } = 9;
         public string Content { get; set; } = string.Empty;
         public int MaxLength { get; set; } = 1000;
@@ -83,7 +83,7 @@ namespace WeiPo.ViewModels
             var content = Content.Replace("\r", "\n");//multi line
             var files = Files.ToList();
             var picids = await Task.WhenAll(files.Select(async it => await Singleton<Api>.Instance.UploadPic(it)));
-            JObject result;
+            JObject? result = null;
             switch (PostType)
             {
                 case PostType.Create:
@@ -93,7 +93,10 @@ namespace WeiPo.ViewModels
                     break;
                 case PostType.Repost:
                     {
-                        result = await Singleton<Api>.Instance.Repost(content, ReplyModel, picids.FirstOrDefault()?.PicId);
+                        if (ReplyModel != null)
+                        {
+                            result = await Singleton<Api>.Instance.Repost(content, ReplyModel, picids.FirstOrDefault()?.PicId);                            
+                        }
                     }
                     break;
                 case PostType.Comment:
@@ -103,10 +106,10 @@ namespace WeiPo.ViewModels
                             result =
                                 await Singleton<Api>.Instance.Reply(content, comment, picids.FirstOrDefault()?.PicId);
                         }
-                        else
+                        else if (ReplyModel != null)
                         {
                             result =
-                                await Singleton<Api>.Instance.Comment(content, ReplyModel, picids.FirstOrDefault()?.PicId);
+                                await Singleton<Api>.Instance.Comment(content, ReplyModel, picids.FirstOrDefault()?.PicId);                      
                         }
                     }
                     break;
@@ -167,7 +170,7 @@ namespace WeiPo.ViewModels
             PostType = PostType.Repost;
             ReplyModel = model.RetweetedStatus ?? model;
             MaxImageFileCount = 1;
-            Content = model.RetweetedStatus == null ? string.Empty : $"//@{model.User.ScreenName}:{model.RawText}";
+            Content = model.RetweetedStatus == null ? string.Empty : $"//@{model.User?.ScreenName}:{model.RawText}";
             MaxLength = 140;
             Files.Clear();
         }

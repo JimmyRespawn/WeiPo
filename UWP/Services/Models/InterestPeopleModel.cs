@@ -9,27 +9,27 @@ namespace WeiPo.Services.Models
         public long? CardType { get; set; }
 
         [JsonProperty("itemid", NullValueHandling = NullValueHandling.Ignore)]
-        public string Itemid { get; set; }
+        public string?  Itemid { get; set; }
 
         [JsonProperty("scheme", NullValueHandling = NullValueHandling.Ignore)]
-        public string Scheme { get; set; }
+        public string?  Scheme { get; set; }
 
         [JsonProperty("background_color", NullValueHandling = NullValueHandling.Ignore)]
         public long? BackgroundColor { get; set; }
 
         [JsonProperty("recom_remark", NullValueHandling = NullValueHandling.Ignore)]
-        public string RecomRemark { get; set; }
+        public string?  RecomRemark { get; set; }
 
         [JsonProperty("desc1", NullValueHandling = NullValueHandling.Ignore)]
-        public string Desc1 { get; set; }
+        public string?  Desc1 { get; set; }
 
         [JsonProperty("user", NullValueHandling = NullValueHandling.Ignore)]
-        public UserModel User { get; set; }
+        public UserModel?  User { get; set; }
 
         [JsonProperty("actionlog", NullValueHandling = NullValueHandling.Ignore)]
-        public Actionlog Actionlog { get; set; }
+        public Actionlog? Actionlog { get; set; }
 
         [JsonProperty("buttons", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ButtonModel> Buttons { get; set; }
+        public List<ButtonModel>?  Buttons { get; set; }
     }
 }

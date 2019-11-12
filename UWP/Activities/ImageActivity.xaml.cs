@@ -53,7 +53,7 @@ namespace WeiPo.Activities
             if (e.Property == ImageHeightProperty || e.Property == ImageWidthProperty ||
                 e.Property == ViewportHeightProperty)
             {
-                (d as ImageEx2).OnSizeChanged();
+                (d as ImageEx2)?.OnSizeChanged();
             }
         }
 
@@ -85,7 +85,7 @@ namespace WeiPo.Activities
             InitializeComponent();
         }
 
-        public ImageViewModel ViewModel { get; set; }
+        public ImageViewModel? ViewModel { get; set; }
 
         protected override void OnCreate(object parameter)
         {
@@ -111,6 +111,10 @@ namespace WeiPo.Activities
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (ViewModel == null)
+            {
+                return;
+            }
             var item = ViewModel.Images[ViewModel.SelectedIndex];
             var name = Path.GetFileName(item.Source);
             var picker = new FileSavePicker

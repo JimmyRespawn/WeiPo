@@ -31,6 +31,6 @@ namespace WeiPo.Activities
             DataContext = ViewModel;
         }
 
-        public StatusViewModel ViewModel { get; private set; }
+        public StatusViewModel? ViewModel { get; private set; }
     }
 }

@@ -5,15 +5,15 @@ namespace WeiPo.Services.Models
     public class UploadPicModel
     {
         [JsonProperty("pic_id", NullValueHandling = NullValueHandling.Ignore)]
-        public string PicId { get; set; }
+        public string?  PicId { get; set; }
 
         [JsonProperty("thumbnail_pic", NullValueHandling = NullValueHandling.Ignore)]
-        public string ThumbnailPic { get; set; }
+        public string?  ThumbnailPic { get; set; }
 
         [JsonProperty("bmiddle_pic", NullValueHandling = NullValueHandling.Ignore)]
-        public string BmiddlePic { get; set; }
+        public string?  BmiddlePic { get; set; }
 
         [JsonProperty("original_pic", NullValueHandling = NullValueHandling.Ignore)]
-        public string OriginalPic { get; set; }
+        public string?  OriginalPic { get; set; }
     }
 }

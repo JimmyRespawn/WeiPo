@@ -5,11 +5,11 @@ namespace WeiPo.Common
 {
     internal class NonNullDataTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate DataTemplate { get; set; }
+        public DataTemplate? DataTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            if (item != null)
+            if (item != null && DataTemplate != null)
             {
                 return DataTemplate;
             }
@@ -55,12 +55,12 @@ namespace WeiPo.Common
             return BoolToVisibility(thiz != other);
         }
 
-        public static Visibility IsLongEqualToVisibility(long thiz, long other)
+        public static Visibility IsLongEqualToVisibility(long? thiz, long other)
         {
             return BoolToVisibility(thiz == other);
         }
 
-        public static Visibility IsLongNonEqualToVisibility(long thiz, long other)
+        public static Visibility IsLongNonEqualToVisibility(long? thiz, long other)
         {
             return BoolToVisibility(thiz != other);
         }
